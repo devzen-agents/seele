@@ -71,6 +71,16 @@ SemVer marcado._
 
 ### Changed
 
+- **CORS pasa de permisivo a allowlist exacta (cambio de comportamiento)** — `seele serve`
+  con al menos un `--cors-allow` respondía `Access-Control-Allow-Origin: *` a cualquier
+  origen, no solo a los declarados; como `kairos up` siempre pasa uno, cualquier página del
+  navegador podía leer la memoria del usuario contra `127.0.0.1:7777`. Sin la bandera no se
+  emitía cabecera CORS, y eso no cambia. Ahora los orígenes
+  se declaran uno por uno con `--cors-allow http(s)://host[:port]`, la bandera es repetible,
+  el comodín `*` y los valores sin esquema se rechazan, y el primer valor inválido aborta
+  el arranque antes de bindear el puerto con el motivo por stderr. Los clientes de navegador,
+  como el Observatory de KAIROS, tienen que declarar cada origen que usan.
+
 - **Default canónico de `score_boost_multiplier`: 1.0** (ADR-16 D3) en las tres superficies que hardcodeaban 0.0 (HTTP `SearchRequest` serde/`Default`, CLI `search`, TUI); `/chat` ya usaba 1.0 — pasar 0.0 explícito sigue apagando el boost.
 - **`[profile.dev] debug = "line-tables-only"`** (ronda 2, sprint
   GRAIL-H1) — el target/ debug del workspace (full debuginfo × 14 crates

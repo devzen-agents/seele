@@ -34,7 +34,7 @@ seele save "WAL is faster than DELETE for crash recovery" \
 # Search it back (hybrid FTS + vec)
 seele search "crash recovery" --project notes
 
-# Wire SEELE into Claude Code (also: cursor, windsurf)
+# Wire SEELE into Claude Code (also: cursor, windsurf, antigravity)
 seele setup --agent claude-code
 
 # Or run as MCP server directly
@@ -78,7 +78,7 @@ numbers: [`docs/COMPARISON.md`](./docs/COMPARISON.md).
 ## What you get
 
 - **`seele save / search / show / list / delete / restore / link /
-  stats / projects / doctor`** — 17-subcommand CLI against a local
+  stats / projects / doctor`** — 19-subcommand CLI against a local
   SQLite database. Privacy stripping (`<private>...</private>`),
   topic-key upserts, 24h normalized-hash dedup, soft delete + restore.
   See [`crates/seele-cli/`](./crates/seele-cli/).
@@ -86,7 +86,10 @@ numbers: [`docs/COMPARISON.md`](./docs/COMPARISON.md).
   `mnema_*` for ENGRAM/MNEMA compat). One `seele mcp` invocation per
   agent. See [`docs/AGENT-SETUP.md`](./docs/AGENT-SETUP.md).
 - **HTTP REST API** — 18 paths / 22 operations + OpenAPI 3.1 + Swagger
-  UI at `/docs`. Bearer auth, optional legacy ENGRAM route aliases.
+  UI at `/docs`. Bearer auth, optional legacy ENGRAM route aliases,
+  and an exact CORS allowlist: pass each browser origin with
+  `--cors-allow http://host:port`. Wildcards are rejected and a bad
+  value aborts startup. With no `--cors-allow`, no origin is allowed.
   See [`crates/seele-http/`](./crates/seele-http/).
 - **TUI** — `seele tui` opens a ratatui interface with 5 panes
   (Home/Browse/Search/Detail/Stats), vi-style keymap.

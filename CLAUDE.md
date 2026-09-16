@@ -22,7 +22,7 @@ Reimplementación clean-room inspirada en [ENGRAM](https://github.com/Gentleman-
 
 ### Lo que ya corre
 
-- `seele serve [--port 7777] [--bind 127.0.0.1] [--legacy-engram-paths] [--auth-bearer <token>] [--db <path>]` — HTTP REST API con Swagger UI en `/docs`, OpenAPI 3.1 en `/openapi.json`.
+- `seele serve [--port 7777] [--bind 127.0.0.1] [--cors-allow <ORIGIN>]... [--legacy-engram-paths] [--auth-bearer <token>] [--db <path>]` — HTTP REST API con Swagger UI en `/docs`, OpenAPI 3.1 en `/openapi.json`. `--cors-allow` es una allowlist exacta y repetible: cada valor debe tener la forma `http(s)://host[:port]`, el comodín `*` se rechaza, y un valor inválido aborta el arranque antes de bindear el puerto, con el motivo por stderr. Sin `--cors-allow` no se permite ningún origen, es decir CORS queda apagado; un cliente de navegador como el Observatory de KAIROS tiene que pasar sus orígenes explícitamente.
 - `seele mcp [--tool-prefix <p>] [--db <path>]` — MCP stdio JSON-RPC 2.0 con 19 tools. Conectable desde Claude Code, Cursor, OpenCode. Per ADR-13, `--tool-prefix mnema` expone `mnema_save`, `mnema_recall`, etc para drop-in compat con consumers ENGRAM.
 - `seele [save|search|show|list|delete|restore|link|stats|doctor|projects]` — clap CLI completa contra el service local (no HTTP). Flags globales `--db`/`--json`/`--fake-embedder`. Con `--json` toda la CLI habla el envelope `{ok,data,warnings}` (errores `{ok:false,error,kind}` a stdout). `seele search --explain` vuelca el trace del pipeline (candidatos por path, distancias vec, params). `seele eval --suite <name>|--suite-file <path>` corre el harness con recall@k/MRR/nDCG@10. ONNX es default en v0.1; `--fake-embedder` (o `SEELE_FAKE_EMBEDDER=1`) fuerza FakeEmbedder. Si ONNX init falla, fallback transparente a Fake con warn.
 - `seele sync [export|import]` — git-friendly chunks JSON gzip. Re-imports idempotent por SHA-256.
@@ -48,7 +48,7 @@ Reimplementación clean-room inspirada en [ENGRAM](https://github.com/Gentleman-
   - `seele-setup` — wizard 3 implementados + 5 skeleton (sprint-04).
   - `seele-project` — 5-case project detection (sprint-04).
   - `seele-engram-import` — migration ENGRAM → SEELE ADR-13 (sprint-04).
-  - `seele-cli` — binary `seele` clap derive, 18 subcomandos (sprint-04; `eval` agregado en v0.3).
+  - `seele-cli` — binary `seele` clap derive, 19 subcomandos (sprint-04; `eval` agregado en v0.3).
   - `seele-eval` — harness de evaluación de calidad de memoria (recall@k/MRR por categoría); suites embebidas + subcomando `seele eval` (v0.3-α, ADR-14).
 - **DB**: SQLite con `rusqlite` (feature `bundled` + `load_extension`) + `sqlite-vec` v0.1.9 vendorizado para 5 targets.
 - **Async**: tokio 1.42 multi-thread.

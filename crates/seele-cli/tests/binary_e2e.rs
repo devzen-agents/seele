@@ -169,6 +169,48 @@ fn serve_health_returns_200_over_real_tcp() {
     assert!(ok, "server did not become healthy within 5s at {base}");
 }
 
+/// A bad `--cors-allow` must stop the boot loudly. Before the allowlist
+/// landed, any non-empty value opened `Access-Control-Allow-Origin: *`;
+/// the first fix dropped bad values with a `tracing::warn!`, which nobody
+/// ever saw because SEELE installs no tracing subscriber — the operator
+/// got "listening" and an allowlist matching nothing. So this asserts the
+/// two things a human actually observes: a non-zero exit and the reason
+/// on stderr.
+#[test]
+fn serve_invalid_cors_allow_exits_nonzero_with_reason_on_stderr() {
+    let td = TempDir::new().unwrap();
+    for (bad, expected) in [
+        ("http://localhost:8765\nX-Injected: 1", "scheme://host[:port]"),
+        ("*", "wildcards"),
+    ] {
+        let out = seele()
+            .arg("serve")
+            .arg("--port")
+            .arg("0")
+            .arg("--db")
+            .arg(td.path().join("seele.db"))
+            .arg("--cors-allow")
+            .arg(bad)
+            .output()
+            .expect("spawn");
+
+        assert!(
+            !out.status.success(),
+            "`--cors-allow {bad:?}` should not have started the server (exit {:?})",
+            out.status
+        );
+        let stderr = String::from_utf8_lossy(&out.stderr);
+        assert!(
+            stderr.contains("invalid CORS origin") && stderr.contains(expected),
+            "stderr must explain the rejection for {bad:?}: {stderr}"
+        );
+        assert!(
+            !stderr.contains("listening"),
+            "server must not bind at all for {bad:?}: {stderr}"
+        );
+    }
+}
+
 #[test]
 fn mcp_suggest_topic_key_honors_custom_families_file() {
     let td = TempDir::new().unwrap();

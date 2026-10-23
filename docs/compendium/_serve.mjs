@@ -1,9 +1,11 @@
 // Tiny static server for the SEELE compendium (Node built-ins only, no deps, no network fetch).
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
-import { extname, join, normalize, sep } from 'node:path';
+import { dirname, extname, join, normalize, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = normalize('C:/dev/tools/SEELE/docs/compendium');
+// The compendium lives next to this script: no machine-specific path.
+const ROOT = normalize(dirname(fileURLToPath(import.meta.url)));
 const PORT = 8137;
 const MIME = {
   '.html': 'text/html; charset=utf-8',

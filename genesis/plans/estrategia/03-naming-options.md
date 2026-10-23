@@ -76,7 +76,7 @@ Latín *scriba*, "escriba". Múltiples productos open source con el nombre. Desc
 
 **SEELE** confirmado por el User el 2026-05-09 con racional explícito: *"es el alma de todos los proyectos"*.
 
-Path locked-in: `C:\dev\tools\SEELE\` (separado de `C:\dev\protocols\` que aloja AEGIS/LUMEN/MNEMA — SEELE es herramienta, no protocolo).
+Path locked-in: un repositorio propio `seele` (separado de los repos de protocolo que alojan AEGIS/LUMEN/MNEMA — SEELE es herramienta, no protocolo).
 
 Repo GitHub previsto: `orlando-vazquez-career/seele`.
 

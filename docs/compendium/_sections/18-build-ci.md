@@ -4,7 +4,7 @@ This section documents how SEELE is compiled, linted, tested, packaged, and ship
 
 ### 18.1 The Cargo workspace
 
-The root `Cargo.toml` (`C:/dev/tools/SEELE/Cargo.toml`) declares a 13-member virtual workspace (no root package — the binary lives in `seele-cli`) using `resolver = "2"`. The members enumerate every crate in `crates/`, leaf-to-root:
+The root `Cargo.toml` declares a 13-member virtual workspace (no root package — the binary lives in `seele-cli`) using `resolver = "2"`. The members enumerate every crate in `crates/`, leaf-to-root:
 
 ```toml
 # Cargo.toml:1-17
@@ -55,7 +55,7 @@ strip = true
 
 ### 18.2 Toolchain pin and rustfmt
 
-`rust-toolchain.toml` (`C:/dev/tools/SEELE/rust-toolchain.toml`) pins the toolchain via rustup auto-selection:
+`rust-toolchain.toml` pins the toolchain via rustup auto-selection:
 
 ```toml
 [toolchain]
@@ -66,11 +66,11 @@ profile = "minimal"
 
 It pins the *channel* to `stable` (not a frozen version like `1.85.0`); the MSRV floor of 1.85 is asserted separately by `rust-version = "1.85"` in `[workspace.package]`, which `cargo` enforces at build time. `components` guarantees rustfmt and clippy are present for the lint job; `profile = "minimal"` keeps installs small (no docs/rust-src). The MSRV was bumped 1.83 → 1.85 to allow `clap_lex` (a transitive dep) compiled with `edition2024` (CHANGELOG.md:348-351).
 
-`rustfmt.toml` (`C:/dev/tools/SEELE/rustfmt.toml`) is intentionally minimal — a single line `edition = "2021"`. The project relies on rustfmt defaults and enforces them with `cargo fmt --all -- --check` in CI; there are no custom style overrides to drift.
+`rustfmt.toml` is intentionally minimal — a single line `edition = "2021"`. The project relies on rustfmt defaults and enforces them with `cargo fmt --all -- --check` in CI; there are no custom style overrides to drift.
 
 ### 18.3 Cargo config and the MSVC CRT workaround
 
-`.cargo/config.toml` (`C:/dev/tools/SEELE/.cargo/config.toml`) exists solely to solve a Windows link-time mismatch. The `ort` 2.x prebuilt binaries link against the dynamic CRT (`/MD`), while the C++ pulled in transitively by `tokenizers` (`esaxx-rs`) defaults to the static CRT (`/MT`); mixing them produces `LNK2038`/`LNK2005` errors when the test binary links. The fix forces dynamic CRT for both Rust and `cc`-built C/C++ on the MSVC target:
+`.cargo/config.toml` exists solely to solve a Windows link-time mismatch. The `ort` 2.x prebuilt binaries link against the dynamic CRT (`/MD`), while the C++ pulled in transitively by `tokenizers` (`esaxx-rs`) defaults to the static CRT (`/MT`); mixing them produces `LNK2038`/`LNK2005` errors when the test binary links. The fix forces dynamic CRT for both Rust and `cc`-built C/C++ on the MSVC target:
 
 ```toml
 # .cargo/config.toml:5-14

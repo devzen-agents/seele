@@ -15,7 +15,7 @@
 
 ## Salida esperada
 
-Un memory engine en **Rust** instalable como binary independiente (`seele`), reusable fuera del ecosistema MNEMA (cualquier agente Claude Code / Cursor / OpenClaw lo puede usar como MCP server). Output: `C:/dev/tools/SEELE/` y repositorio público bajo `orlando-vazquez-career/seele`.
+Un memory engine en **Rust** instalable como binary independiente (`seele`), reusable fuera del ecosistema MNEMA (cualquier agente Claude Code / Cursor / OpenClaw lo puede usar como MCP server). Output: el repositorio público https://github.com/orlando-vazquez-career/seele.
 
 ## Próximas fases (después de Estrategia)
 

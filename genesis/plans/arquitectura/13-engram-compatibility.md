@@ -151,8 +151,8 @@ Total ~600-900 LOC adicionales. Aceptable vs el costo de migración manual (sema
 ## Referencias
 
 - ENGRAM upstream: https://github.com/Gentleman-Programming/engram
-- MNEMA memory-engine guide (consumer side): `C:/dev/protocols/MNEMA/guides/memory-engine.md`
-- MNEMA install-engram (legacy): `C:/dev/protocols/MNEMA/guides/install-engram.md`
+- MNEMA memory-engine guide (consumer side): `guides/memory-engine.md` del repo privado MNEMA del autor (no publicado; no se requiere para usar SEELE).
+- MNEMA install-engram (legacy): `guides/install-engram.md` del mismo repo.
 - SEELE ADR-02 schema: `genesis/plans/arquitectura/02-schema-sqlite.md`
 - SEELE ADR-05 MCP tools: `genesis/plans/arquitectura/05-mcp-server.md`
 - Cloven review post Bloque C.1 (2026-05-10): timeline sight del problema.

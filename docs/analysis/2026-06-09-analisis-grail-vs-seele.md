@@ -1,9 +1,9 @@
 # Análisis comparativo GRAIL → SEELE
 
 **Fecha**: 2026-06-09
-**SEELE**: commit `91d275c` (C:/dev/tools/SEELE, main)
-**GRAIL**: commit `b7bb49e` (C:/dev/tools/GRAIL, v0.1.4)
-**Metodología**: escaneo multi-agente de GRAIL con compendio verificado de 370 claims fact-checkeados ([COMPENDIUM.md](C:/dev/tools/GRAIL/docs/COMPENDIUM.md) + `docs/compendium/01..16-*.md`), 8 lecturas dirigidas del codebase SEELE, y 10 dimensiones de análisis sometidas a verificación adversarial independiente (cada claim chequeado contra código real de ambos repos; las correcciones del verificador están integradas en este documento y mandan sobre los claims originales). Total de errores de detalle detectados y corregidos: ~35; propuestas invalidadas: 0 de 40.
+**SEELE**: commit [`91d275c`](https://github.com/orlando-vazquez-career/seele/commit/91d275c) (main)
+**GRAIL**: commit [`b7bb49e`](https://github.com/CAMARA-CHILENA-INTELIGENCIA-ARTIFICIAL/GRAIL/commit/b7bb49e) (v0.1.4)
+**Metodología**: escaneo multi-agente de GRAIL con compendio verificado de 370 claims fact-checkeados (`COMPENDIUM.md` + `compendium/01..16-*.md`, generados localmente por el autor sobre el clon de GRAIL en [`b7bb49e`](https://github.com/CAMARA-CHILENA-INTELIGENCIA-ARTIFICIAL/GRAIL/commit/b7bb49e); no forman parte del repo público de GRAIL y quedan pendientes de vendorizar bajo `docs/analysis/sources/` con cabecera de procedencia), 8 lecturas dirigidas del codebase SEELE, y 10 dimensiones de análisis sometidas a verificación adversarial independiente (cada claim chequeado contra código real de ambos repos; las correcciones del verificador están integradas en este documento y mandan sobre los claims originales). Total de errores de detalle detectados y corregidos: ~35; propuestas invalidadas: 0 de 40.
 
 ---
 

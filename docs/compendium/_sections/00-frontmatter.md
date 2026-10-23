@@ -7,7 +7,7 @@
 |---|---|
 | **Subject** | SEELE — a local-first memory engine for AI agents |
 | **Version documented** | `v0.2.0` (workspace), shipped baseline `v0.1.0` |
-| **Repository** | `C:/dev/tools/SEELE` — `https://github.com/orlando-vazquez-career/seele` |
+| **Repository** | `https://github.com/orlando-vazquez-career/seele` |
 | **Language / stack** | Rust 1.85 (edition 2021) · SQLite (FTS5 + sqlite-vec/vec0) · ONNX (`all-MiniLM-L6-v2`) · axum · ratatui · clap |
 | **Scale** | ~19,500 lines of Rust across 13 workspace crates + an Astro static site |
 | **License** | MIT © 2026 DevZen SpA (clean-room reimplementation inspired by ENGRAM) |
@@ -31,7 +31,7 @@ Where the verification pass found and corrected inaccuracies, they are reflected
 
 ## Document conventions
 
-- Code references use `path:line` form relative to the repository root (`C:/dev/tools/SEELE`).
+- Code references use `path:line` form relative to the repository root.
 - "Observation" is SEELE's canonical name for a stored memory record; "engram" and "memory" appear as synonyms inherited from the ENGRAM lineage (see §24 Glossary).
 - "vec0" refers to the virtual-table interface of the vendored `sqlite-vec` extension.
 - Throughout, **MCP** = Model Context Protocol (Anthropic), **RRF** = Reciprocal Rank Fusion, **FTS5** = SQLite's full-text search module v5.

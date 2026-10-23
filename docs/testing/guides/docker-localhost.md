@@ -61,7 +61,7 @@ run the commands from Git Bash / WSL where inline JSON quoting works.
 ## 2. Build the image
 
 ```bash
-cd C:/dev/tools/SEELE
+cd path/to/seele      # your clone of the repository
 docker compose build
 ```
 

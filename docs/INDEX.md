@@ -23,6 +23,13 @@
   fechada, con números reproducibles del harness (GRAIL-H1, Q11).
 - [`docs/RELEASING.md`](RELEASING.md) — runbook de release: antes /
   tagear / después / fallos comunes (GRAIL-H1, Q1).
+- [`docs/GRAPHIFY.md`](GRAPHIFY.md) — `seele graph export`: el grafo de
+  memoria como `graph.json` de Graphify, hand-off opcional y degradable
+  (ADR-17).
+- [`docs/CONVENTIONS.md`](CONVENTIONS.md) — cómo se citan repos
+  hermanos, docs externas y herramientas opcionales: URL canónica (+ commit),
+  variables de entorno con default, PATH con degradación; nunca rutas de
+  una máquina. Con ejemplos verificados de proyectos comparables.
 
 ## Análisis comparativos (`docs/analysis/`)
 
@@ -64,8 +71,11 @@ Estrategia, arquitectura y táctica del Sprint 01 viven bajo `genesis/plans/`. E
 - **Arquitectura**: [`14-evaluation-harness.md`](plans/arquitectura/14-evaluation-harness.md) — ADR-14 (harness eval-first + `embeddings_meta`); [`15-binary-size-footprint.md`](plans/arquitectura/15-binary-size-footprint.md) — ADR-15 (footprint del binario, feature-gating propuesto).
 - **Sprint GRAIL-H1 (ejecutado)**: [`executed/tactica/2026-06-10-h1-grail-quickwins.md`](plans/executed/tactica/2026-06-10-h1-grail-quickwins.md) — 11 quick wins GRAIL→SEELE, cerrado 2026-06-10. Devlog: [`2026-06-10-sprint-grail-h1-quickwins.md`](aegis/devlogs/2026-06-10-sprint-grail-h1-quickwins.md). Baselines del gate: `baseline-v2-{pre,post}-q3.json`.
 - **v0.3-α «calidad de memoria»**: [`estrategia/00-overview.md`](plans/estrategia/v0.3-calidad-memoria/00-overview.md), [`tactica/00-bloques.md`](plans/executed/tactica/v0.3-calidad-memoria/00-bloques.md), [`baseline-v0.2.json`](plans/executed/tactica/v0.3-calidad-memoria/baseline-v0.2.json).
+- **Graphify opcional y referencias portables (2026-10-22)**: [`arquitectura/17-graphify-opcional-no-critico.md`](plans/arquitectura/17-graphify-opcional-no-critico.md) — ADR-17 (SEELE escribe el formato de Graphify, no depende de él); [`tactica/2026-10-22-graphify-opcional-y-refs-portables.md`](plans/tactica/2026-10-22-graphify-opcional-y-refs-portables.md) — tareas, incluida la corrección de la deriva de versiones internas que tenía roto el build de `main` desde v0.4.0.
 
 ## Devlogs
+
+> Los devlogs y los planes bajo `executed/` son registros de su fecha: conservan rutas absolutas de la máquina del autor tal como se escribieron, y no se corrigen. Toda referencia vigente sigue [`docs/CONVENTIONS.md`](CONVENTIONS.md).
 
 - [`docs/aegis/devlogs/2026-05-10-sprint-01-foundation.md`](aegis/devlogs/2026-05-10-sprint-01-foundation.md) — Sprint-01 BE Foundation cerrado. 99 tests verde, CI matrix verde, schema completo + CRUD funcional.
 - [`docs/aegis/devlogs/2026-05-10-sprint-02-embedder-search.md`](aegis/devlogs/2026-05-10-sprint-02-embedder-search.md) — Sprint-02 BE Embedder + Search cerrado. Embedder polish (cache + INT8 + SHA256 + singleton) + search polish (boost + empty-query + annotations + max-distance) + 31 tests nuevos. Total 130 verde.
@@ -75,10 +85,11 @@ Estrategia, arquitectura y táctica del Sprint 01 viven bajo `genesis/plans/`. E
 - [`docs/aegis/devlogs/2026-05-20-patch-mcp-call-tool-result.md`](aegis/devlogs/2026-05-20-patch-mcp-call-tool-result.md) — patch del envelope `CallToolResult` (MCP `tools/call`) + test de regresión.
 - [`docs/aegis/devlogs/2026-05-29-sprint-v0.3-alpha-eval-harness.md`](aegis/devlogs/2026-05-29-sprint-v0.3-alpha-eval-harness.md) — Sprint v0.3-α eval-first: crate `seele-eval` (recall@k/MRR), baseline v0.2 (coding-memory r@5 0.83), fix silent-drop `int_id`, `embeddings_meta` (V002), ADR-15. (Pendiente clippy + merge a main.)
 - [`docs/aegis/devlogs/2026-06-10-sprint-grail-h1-quickwins.md`](aegis/devlogs/2026-06-10-sprint-grail-h1-quickwins.md) — Sprint GRAIL-H1: los 11 quick wins del plan GRAIL→SEELE. Gate eval de `fts_loose`: paraphrase r@5 0.733→0.867, TOTAL MRR 0.657→0.788, cero degradación. Bug latente vec0 INSERT OR REPLACE cazado y arreglado. Release pipeline reparado.
+- [`docs/aegis/devlogs/2026-10-22-graphify-opcional-y-refs-portables.md`](aegis/devlogs/2026-10-22-graphify-opcional-y-refs-portables.md) — `seele graph export` (ADR-17, Graphify opcional y degradable), referencias portables (`docs/CONVENTIONS.md`), y reparación del build de `main` (pins internos 0.2.0→0.4.0). Pendiente Gate 2.
 
 ## Cost Ledger
 
-- [`docs/aegis/devlogs/cost-ledger.jsonl`](aegis/devlogs/cost-ledger.jsonl) — append-only por plan, modelo, fase. Ver convenciones en `C:/dev/protocols/AEGIS/guides/cost-ledger.md`.
+- [`docs/aegis/devlogs/cost-ledger.jsonl`](aegis/devlogs/cost-ledger.jsonl) — append-only por plan, modelo, fase. Ver convenciones en [`guides/cost-ledger.md` de aegis-protocol](https://github.com/orlando-vazquez-career/aegis-protocol/blob/main/guides/cost-ledger.md).
 
 ## Operación
 

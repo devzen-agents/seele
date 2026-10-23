@@ -459,9 +459,15 @@ impl ObservationStore {
             )
             .optional()?;
         Ok(bytes.map(|b| {
-            b.chunks_exact(4)
+            // clippy >= 1.98 suggests `as_chunks::<4>()`, which is stable
+            // only since Rust 1.88; the workspace MSRV is 1.85
+            // (`rust-version`), so keep `chunks_exact` until the MSRV moves.
+            #[allow(clippy::chunks_exact_to_as_chunks)]
+            let floats: Vec<f32> = b
+                .chunks_exact(4)
                 .map(|c| f32::from_le_bytes([c[0], c[1], c[2], c[3]]))
-                .collect()
+                .collect();
+            floats
         }))
     }
 

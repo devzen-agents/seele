@@ -27,6 +27,11 @@ pub struct Cli {
     #[arg(long, global = true)]
     pub db: Option<PathBuf>,
 
+    /// Refuse a missing or non-file database instead of initializing one.
+    /// Use with an explicit --db path for existing-memory automation.
+    #[arg(long, global = true)]
+    pub require_existing_db: bool,
+
     /// Force the deterministic FakeEmbedder. Useful for tests, dev
     /// workflows, and air-gapped environments. Equivalent to setting
     /// `SEELE_FAKE_EMBEDDER=1` in the environment.
@@ -98,6 +103,10 @@ pub struct OutputOpts {
 }
 
 pub async fn run(cli: Cli) -> anyhow::Result<()> {
+    if cli.require_existing_db {
+        let path = cli.db.clone().unwrap_or_else(crate::default_db_path);
+        require_database_file(&path)?;
+    }
     let out = OutputOpts { json: cli.json };
     match cli.command {
         Command::Save(args) => commands::save::run(args, &cli.db, cli.fake_embedder, &out).await,
@@ -199,6 +208,17 @@ pub(crate) fn fake_env_set() -> bool {
     std::env::var(FAKE_EMBEDDER_ENV)
         .map(|v| !v.trim().is_empty())
         .unwrap_or(false)
+}
+
+/// A preflight guard against accidental initialization, not a storage identity
+/// check or protection against concurrent path replacement.
+pub(crate) fn require_database_file(path: &std::path::Path) -> anyhow::Result<()> {
+    let metadata = std::fs::metadata(path)
+        .map_err(|e| anyhow::anyhow!("database must already exist at {}: {e}", path.display()))?;
+    if !metadata.is_file() {
+        anyhow::bail!("database path is not a file: {}", path.display());
+    }
+    Ok(())
 }
 
 #[cfg(test)]

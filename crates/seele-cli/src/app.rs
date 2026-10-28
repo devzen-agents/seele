@@ -57,6 +57,10 @@ pub enum Command {
     Restore(commands::restore::Args),
     /// Create a typed link between two observations.
     Link(commands::link::Args),
+    /// Export the memory graph as Graphify's `graph.json` (optional
+    /// graphify hand-off, ADR-17).
+    #[command(subcommand)]
+    Graph(commands::graph::GraphCmd),
     /// Aggregate stats: observations + sessions counters.
     Stats,
     /// Health check + embedder + schema + FTS index health (`--fix` optimizes).
@@ -109,6 +113,7 @@ pub async fn run(cli: Cli) -> anyhow::Result<()> {
             commands::restore::run(args, &cli.db, cli.fake_embedder, &out).await
         }
         Command::Link(args) => commands::link::run(args, &cli.db, cli.fake_embedder, &out).await,
+        Command::Graph(cmd) => commands::graph::run(cmd, &cli.db, cli.fake_embedder, &out).await,
         Command::Stats => commands::stats::run(&cli.db, cli.fake_embedder, &out).await,
         Command::Doctor(args) => {
             commands::doctor::run(args, &cli.db, cli.fake_embedder, &out).await

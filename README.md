@@ -96,6 +96,13 @@ numbers: [`docs/COMPARISON.md`](./docs/COMPARISON.md).
 - **Multi-machine sync** — `seele sync export → import` ships
   observations between machines as a single git-friendly gzipped JSON
   chunk. Idempotent via SHA-256 chunk id + per-target ledger.
+- **Graph export (optional Graphify hand-off)** — `seele graph export`
+  writes the memory graph (observations, typed links, judged/pending
+  relations, project/type hubs) as a Graphify `graph.json`;
+  `--run-graphify` clusters and reports with the `graphify` CLI when
+  one is found (`--graphify-bin` > `$GRAPHIFY_BIN` > PATH) and degrades
+  to a warning when it is not. No LLM, no new dependency. See
+  [`docs/GRAPHIFY.md`](./docs/GRAPHIFY.md).
 - **ENGRAM migration** — `seele import from-engram <path>` ports an
   existing ENGRAM/MNEMA SQLite DB in one shot, preserving ULIDs and
   mapping `linked_to[]` to first-class links. See
@@ -151,6 +158,10 @@ full attribution.
   Claude Code, Cursor, Windsurf.
 - [`docs/ENGRAM-MIGRATION.md`](./docs/ENGRAM-MIGRATION.md) — porting
   an existing ENGRAM/MNEMA database.
+- [`docs/GRAPHIFY.md`](./docs/GRAPHIFY.md) — `seele graph export` and
+  the optional Graphify hand-off (ADR-17).
+- [`docs/CONVENTIONS.md`](./docs/CONVENTIONS.md) — how this repo refers
+  to sibling repos, external docs and optional tools (no machine paths).
 - [`docs/INDEX.md`](./docs/INDEX.md) — full doc map, devlogs, ADRs.
 - [`CLAUDE.md`](./CLAUDE.md) — operating rules for Claude Code when
   working in this repo.

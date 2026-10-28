@@ -52,7 +52,7 @@ Bump LUMEN v0.9.1 → v0.10.0 con patch "Visual Counsel". NO rewrite. Cuatro cam
 5/5 reviewers convergieron en 4 consensos no negociables: refs visuales committed antes de código + loop perceptual + tokens-primero es antipatrón + más gates/rewrite NO es solución. Combinación óptima β (rúbrica) + ε (plan aterrizaje) + 1 elemento γ (screenshot-critique sequential). δ preservado como sección, no core.
 
 ## PRÓXIMO PASO HOY
-Crear C:/dev/protocols/LUMEN/templates/aesthetic-pillars.template.md (45 min). Validar retroactivamente contra Sprint LUMEN-01 — si triángulo centered-without-context NO sobrevive a "Decisiones audaces", template calibrado.
+Crear templates/aesthetic-pillars.template.md (repo LUMEN) (45 min). Validar retroactivamente contra Sprint LUMEN-01 — si triángulo centered-without-context NO sobrevive a "Decisiones audaces", template calibrado.
 
 ## DISENSO REGISTRADO
 - δ: "wow es del CRITERIO del director, mirá diseño 6 meses" → preservado como sección, no tesis core
@@ -322,7 +322,7 @@ El wow no es propiedad del proceso. Es propiedad del CRITERIO de la persona que 
 - Más gates (ya hay 2, no romper cadencia)
 
 ## Primera acción HOY (1 sola cosa)
-Escribir `C:/dev/protocols/LUMEN/templates/aesthetic-pillars.template.md` (45 min). Validar retroactivamente contra SEELE-01 — ¿triángulo sobrevive a "Decisiones audaces"? Si no, template calibrado, mañana integra como Material.0 obligatorio en v0.10.0.""",
+Escribir `templates/aesthetic-pillars.template.md (repo LUMEN)` (45 min). Validar retroactivamente contra SEELE-01 — ¿triángulo sobrevive a "Decisiones audaces"? Si no, template calibrado, mañana integra como Material.0 obligatorio en v0.10.0.""",
         "metadata": {
             "kind": "advisor_output",
             "verdict_id": VERDICT_ID,
@@ -621,8 +621,11 @@ print(f"\nDone: {ok_count} ok · {err_count} err")
 # ──────────────────────────────────────────────────────────────────────
 
 import os
-LEDGER = "C:/dev/protocols/MNEMA/cost-ledger.jsonl"
-os.makedirs(os.path.dirname(LEDGER), exist_ok=True)
+# The MNEMA cost-ledger is not part of this repository: point MNEMA_COST_LEDGER at it.
+LEDGER = os.environ.get("MNEMA_COST_LEDGER")
+if not LEDGER:
+    sys.exit("MNEMA_COST_LEDGER is not set: export it with the path of your cost-ledger.jsonl")
+os.makedirs(os.path.dirname(os.path.abspath(LEDGER)), exist_ok=True)
 entry = {
     "date": "2026-05-12",
     "verdict_id": VERDICT_ID,
@@ -640,7 +643,7 @@ entry = {
     "encoded_observations": ok_count,
     "encoded_errors": err_count,
     "outputs_persisted_in_seele": True,
-    "next_step": "Crear C:/dev/protocols/LUMEN/templates/aesthetic-pillars.template.md (45 min) + validar retroactivamente contra Sprint LUMEN-01.",
+    "next_step": "Crear templates/aesthetic-pillars.template.md (repo LUMEN) (45 min) + validar retroactivamente contra Sprint LUMEN-01.",
 }
 with open(LEDGER, "a", encoding="utf-8") as f:
     f.write(json.dumps(entry, ensure_ascii=False) + "\n")

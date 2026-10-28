@@ -2,6 +2,7 @@
 //!
 //! Subcommands:
 //! - `seele save / search / show / list / delete / restore / link` — local memory ops.
+//! - `seele graph export` — the memory graph as Graphify's `graph.json` (optional hand-off, ADR-17).
 //! - `seele stats / doctor / projects` — introspection.
 //! - `seele backup <destino>` — consistent one-file DB copy (VACUUM INTO).
 //! - `seele sync export / sync import` — chunk-based multi-machine sync.

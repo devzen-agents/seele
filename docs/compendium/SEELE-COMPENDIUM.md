@@ -7,7 +7,7 @@
 |---|---|
 | **Subject** | SEELE — a local-first memory engine for AI agents |
 | **Version documented** | `v0.2.0` (workspace), shipped baseline `v0.1.0` |
-| **Repository** | `C:/dev/tools/SEELE` — `https://github.com/orlando-vazquez-career/seele` |
+| **Repository** | `https://github.com/orlando-vazquez-career/seele` |
 | **Language / stack** | Rust 1.85 (edition 2021) · SQLite (FTS5 + sqlite-vec/vec0) · ONNX (`all-MiniLM-L6-v2`) · axum · ratatui · clap |
 | **Scale** | ~19,500 lines of Rust across 13 workspace crates + an Astro static site |
 | **License** | MIT © 2026 DevZen SpA (clean-room reimplementation inspired by ENGRAM) |
@@ -31,7 +31,7 @@ Where the verification pass found and corrected inaccuracies, they are reflected
 
 ## Document conventions
 
-- Code references use `path:line` form relative to the repository root (`C:/dev/tools/SEELE`).
+- Code references use `path:line` form relative to the repository root.
 - "Observation" is SEELE's canonical name for a stored memory record; "engram" and "memory" appear as synonyms inherited from the ENGRAM lineage (see §24 Glossary).
 - "vec0" refers to the virtual-table interface of the vendored `sqlite-vec` extension.
 - Throughout, **MCP** = Model Context Protocol (Anthropic), **RRF** = Reciprocal Rank Fusion, **FTS5** = SQLite's full-text search module v5.
@@ -3317,7 +3317,7 @@ This section documents how SEELE is compiled, linted, tested, packaged, and ship
 
 ### 18.1 The Cargo workspace
 
-The root `Cargo.toml` (`C:/dev/tools/SEELE/Cargo.toml`) declares a 13-member virtual workspace (no root package — the binary lives in `seele-cli`) using `resolver = "2"`. The members enumerate every crate in `crates/`, leaf-to-root:
+The root `Cargo.toml` declares a 13-member virtual workspace (no root package — the binary lives in `seele-cli`) using `resolver = "2"`. The members enumerate every crate in `crates/`, leaf-to-root:
 
 ```toml
 # Cargo.toml:1-17
@@ -3368,7 +3368,7 @@ strip = true
 
 ### 18.2 Toolchain pin and rustfmt
 
-`rust-toolchain.toml` (`C:/dev/tools/SEELE/rust-toolchain.toml`) pins the toolchain via rustup auto-selection:
+`rust-toolchain.toml` pins the toolchain via rustup auto-selection:
 
 ```toml
 [toolchain]
@@ -3379,11 +3379,11 @@ profile = "minimal"
 
 It pins the *channel* to `stable` (not a frozen version like `1.85.0`); the MSRV floor of 1.85 is asserted separately by `rust-version = "1.85"` in `[workspace.package]`, which `cargo` enforces at build time. `components` guarantees rustfmt and clippy are present for the lint job; `profile = "minimal"` keeps installs small (no docs/rust-src). The MSRV was bumped 1.83 → 1.85 to allow `clap_lex` (a transitive dep) compiled with `edition2024` (CHANGELOG.md:348-351).
 
-`rustfmt.toml` (`C:/dev/tools/SEELE/rustfmt.toml`) is intentionally minimal — a single line `edition = "2021"`. The project relies on rustfmt defaults and enforces them with `cargo fmt --all -- --check` in CI; there are no custom style overrides to drift.
+`rustfmt.toml` is intentionally minimal — a single line `edition = "2021"`. The project relies on rustfmt defaults and enforces them with `cargo fmt --all -- --check` in CI; there are no custom style overrides to drift.
 
 ### 18.3 Cargo config and the MSVC CRT workaround
 
-`.cargo/config.toml` (`C:/dev/tools/SEELE/.cargo/config.toml`) exists solely to solve a Windows link-time mismatch. The `ort` 2.x prebuilt binaries link against the dynamic CRT (`/MD`), while the C++ pulled in transitively by `tokenizers` (`esaxx-rs`) defaults to the static CRT (`/MT`); mixing them produces `LNK2038`/`LNK2005` errors when the test binary links. The fix forces dynamic CRT for both Rust and `cc`-built C/C++ on the MSVC target:
+`.cargo/config.toml` exists solely to solve a Windows link-time mismatch. The `ort` 2.x prebuilt binaries link against the dynamic CRT (`/MD`), while the C++ pulled in transitively by `tokenizers` (`esaxx-rs`) defaults to the static CRT (`/MT`); mixing them produces `LNK2038`/`LNK2005` errors when the test binary links. The fix forces dynamic CRT for both Rust and `cc`-built C/C++ on the MSVC target:
 
 ```toml
 # .cargo/config.toml:5-14
@@ -4249,7 +4249,7 @@ SEELE was built under **AEGIS v2.0.0** ("sin agentes en background, todo en cons
 
 Two **human gates** are mandatory: Gate 1 (tactical-plan review before Execution) and Gate 2 (closure approval before state-sync). The "regla de oro AEGIS": a cycle is not closed unless `executed/`, the devlog, and `CLAUDE.md`/`INDEX.md` updates all exist. v0.1.0 was tagged after a `v0.1.0-rc.1` dry-run to validate `release.yml`; the build closed at "322 tests verde + 4 ignored" (per `CLAUDE.md`; Sprint-05's own devlog says ~340) with clippy/fmt/STELE-residual green. Development continued past v0.1 (e.g. `2026-05-20-patch-mcp-call-tool-result.md`).
 
-**Cloven** is the external-review agent (`C:/dev/buddys/cloven/`), invoked between cycles ("`/cloven`"). Per `CLAUDE.md` it surfaced four documented findings during genesis: (1) NIT 2026-05-10 — scrub the legacy "STELE" name from generated Rust (closed via `check-no-stele-residual.{sh,ps1}` + CI jobs); (2) follow-up 2026-05-10 — license must be pure MIT, tests in order, Dependabot for the `ort` pin (closed in commits `47d87ac`/`9478201`); (3) Sprint-04 mid-review — four findings: CRITICO 1 `seele-sync::import` lacked a transaction, CRITICO 2 `seele-setup::write_atomic` used non-atomic `std::fs::write`, ALTO `setup --all` iterated skeletons + dead `--fake-embedder` UI, MEDIO `seele-project` git subprocess lacked a timeout — all closed in commit `d152842` (a 1500ms thread+mpsc cap for the git timeout). Beyond `CLAUDE.md`, Cloven's sight directly *produced* ADRs: the missing MNEMA mapping (→ ADR-10), the embedder NITs (→ ADR-12), the ENGRAM-migration timeline risk (→ ADR-13), and the TUI live-search spec/code drift (noted in ADR-07). Cloven is therefore best understood as the mechanism that converted external review into tracked, ADR-grade decisions.
+**Cloven** is the external-review agent (a private tool of the author, outside this repository), invoked between cycles ("`/cloven`"). Per `CLAUDE.md` it surfaced four documented findings during genesis: (1) NIT 2026-05-10 — scrub the legacy "STELE" name from generated Rust (closed via `check-no-stele-residual.{sh,ps1}` + CI jobs); (2) follow-up 2026-05-10 — license must be pure MIT, tests in order, Dependabot for the `ort` pin (closed in commits `47d87ac`/`9478201`); (3) Sprint-04 mid-review — four findings: CRITICO 1 `seele-sync::import` lacked a transaction, CRITICO 2 `seele-setup::write_atomic` used non-atomic `std::fs::write`, ALTO `setup --all` iterated skeletons + dead `--fake-embedder` UI, MEDIO `seele-project` git subprocess lacked a timeout — all closed in commit `d152842` (a 1500ms thread+mpsc cap for the git timeout). Beyond `CLAUDE.md`, Cloven's sight directly *produced* ADRs: the missing MNEMA mapping (→ ADR-10), the embedder NITs (→ ADR-12), the ENGRAM-migration timeline risk (→ ADR-13), and the TUI live-search spec/code drift (noted in ADR-07). Cloven is therefore best understood as the mechanism that converted external review into tracked, ADR-grade decisions.
 
 ### 22.5 The LUMEN protocol for the web
 

@@ -23,7 +23,7 @@ Versiones:
 
 ## MNEMA counsel disparado
 
-Sprint LUMEN-01 disparó counsel completo (5 advisors + 5 reviewers + verdict + Cloven post-review) sobre cómo mejorar LUMEN protocolo. Verdict: `vrd_2026-05-12_lumen-v0.10.0`. Persistido en SEELE bajo `project=mnema`. Cost-ledger en `C:/dev/protocols/MNEMA/cost-ledger.jsonl`.
+Sprint LUMEN-01 disparó counsel completo (5 advisors + 5 reviewers + verdict + Cloven post-review) sobre cómo mejorar LUMEN protocolo. Verdict: `vrd_2026-05-12_lumen-v0.10.0`. Persistido en SEELE bajo `project=mnema`. Cost-ledger en el repo privado MNEMA del autor (`cost-ledger.jsonl`, fuera de este repositorio; `scripts/encode-mnema-lumen-counsel.py` lo toma de `$MNEMA_COST_LEDGER`).
 
 ## Estructura
 
@@ -36,7 +36,7 @@ Sprint LUMEN-01 disparó counsel completo (5 advisors + 5 reviewers + verdict + 
 
 ## Protocolo
 
-LUMEN v0.11.0 — `C:/dev/protocols/LUMEN/LUMEN-PROTOCOL.md` (Multi-Resolution patch aplicado 2026-05-12; Playwright headless + 5 breakpoints obligatorios en Fase 3.5 Visual Critique Loop).
+LUMEN v0.11.0 — [`LUMEN-PROTOCOL.md`](https://github.com/orlando-vazquez-career/lumen-protocol/blob/main/LUMEN-PROTOCOL.md) (repo privado del autor; Multi-Resolution patch aplicado 2026-05-12; Playwright headless + 5 breakpoints obligatorios en Fase 3.5 Visual Critique Loop).
 
 ## ADRs visuales
 

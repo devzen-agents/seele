@@ -2,7 +2,7 @@
 
 **Fecha**: 2026-05-09
 **Estado**: en ejecución
-**Fase previa**: Estrategia (cerrada con SEELE como nombre, `C:\dev\tools\SEELE\` como path, scope incluyendo TUI desde v0.1).
+**Fase previa**: Estrategia (cerrada con SEELE como nombre, un repositorio propio (`seele`) como path, scope incluyendo TUI desde v0.1).
 
 ## ADRs de esta fase
 

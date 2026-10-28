@@ -180,7 +180,10 @@ fn serve_health_returns_200_over_real_tcp() {
 fn serve_invalid_cors_allow_exits_nonzero_with_reason_on_stderr() {
     let td = TempDir::new().unwrap();
     for (bad, expected) in [
-        ("http://localhost:8765\nX-Injected: 1", "scheme://host[:port]"),
+        (
+            "http://localhost:8765\nX-Injected: 1",
+            "scheme://host[:port]",
+        ),
         ("*", "wildcards"),
     ] {
         let out = seele()

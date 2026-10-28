@@ -78,7 +78,7 @@ Cualquier agente Claude Code, Cursor, OpenCode, Codex, OpenClaw o usuario humano
 
 ## Output esperado
 
-`C:/dev/tools/SEELE/` con:
+El repositorio `seele` (https://github.com/orlando-vazquez-career/seele) con:
 
 ```
 SEELE/

@@ -2,7 +2,7 @@
 
 **Estado**: Borrador pre-stageado · 2026-05-29 · **Pendiente Gate 1 humano**
 **Origen**: Auditoría externa "SEELE vs SOTA memory engines" corrida en Cowork con un Counsel MNEMA completo (5 advisors + 5 reviewers ciegos + veredicto, `claude-opus-4-8`).
-**Reporte fuente**: `C:/dev/sandbox/experiments/claude-cowork-dispatch/Reporte_SEELE_Auditoria-Memory-Engines_2026-05-29.md`
+**Reporte fuente**: `Reporte_SEELE_Auditoria-Memory-Engines_2026-05-29.md` (informe local del autor, generado en Cowork; no forma parte de este repositorio)
 **ADR asociado**: `docs/plans/arquitectura/14-evaluation-harness.md` (ADR-14).
 **Táctica**: `docs/plans/executed/tactica/v0.3-calidad-memoria/00-bloques.md`.
 
@@ -60,4 +60,4 @@ El estado del arte 2026 de memory engines para agentes (Mem0, Zep/Graphiti, Lett
 
 - Veredicto y counsel completo: §5 del reporte fuente.
 - ADRs SEELE relacionados: `genesis/plans/arquitectura/02-schema-sqlite.md`, `03-search-hybrid.md`, `04-embedder-onnx.md` (este sprint extiende sus "out of scope v0.2/v0.3").
-- AEGIS: `C:/dev/protocols/AEGIS/AEGIS-PROTOCOL.md` (query-before-act / save-after-decide).
+- AEGIS: [`AEGIS-PROTOCOL.md`](https://github.com/orlando-vazquez-career/aegis-protocol/blob/main/AEGIS-PROTOCOL.md) (query-before-act / save-after-decide).

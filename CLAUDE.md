@@ -1,6 +1,6 @@
 # CLAUDE.md — SEELE repo
 
-Reglas operativas para Claude Code cuando trabaje en este repo. Específico al stack y dominio. El protocolo AEGIS general vive en `C:/dev/protocols/AEGIS/AEGIS-PROTOCOL.md`; este archivo es la capa fina por encima.
+Reglas operativas para Claude Code cuando trabaje en este repo. Específico al stack y dominio. El protocolo AEGIS general vive en su propio repositorio, [aegis-protocol](https://github.com/orlando-vazquez-career/aegis-protocol) (`AEGIS-PROTOCOL.md`); este archivo es la capa fina por encima. Las referencias a repos hermanos y a herramientas opcionales siguen `docs/CONVENTIONS.md`: URL canónica, variable de entorno o enlace relativo, nunca una ruta de una máquina concreta.
 
 ## Qué es SEELE
 
@@ -26,6 +26,7 @@ Reimplementación clean-room inspirada en [ENGRAM](https://github.com/Gentleman-
 - `seele mcp [--tool-prefix <p>] [--db <path>]` — MCP stdio JSON-RPC 2.0 con 19 tools. Conectable desde Claude Code, Cursor, OpenCode. Per ADR-13, `--tool-prefix mnema` expone `mnema_save`, `mnema_recall`, etc para drop-in compat con consumers ENGRAM.
 - `seele [save|search|show|list|delete|restore|link|stats|doctor|projects]` — clap CLI completa contra el service local (no HTTP). Flags globales `--db`/`--json`/`--fake-embedder`. Con `--json` toda la CLI habla el envelope `{ok,data,warnings}` (errores `{ok:false,error,kind}` a stdout). `seele search --explain` vuelca el trace del pipeline (candidatos por path, distancias vec, params). `seele eval --suite <name>|--suite-file <path>` corre el harness con recall@k/MRR/nDCG@10. ONNX es default en v0.1; `--fake-embedder` (o `SEELE_FAKE_EMBEDDER=1`) fuerza FakeEmbedder. Si ONNX init falla, fallback transparente a Fake con warn.
 - `seele sync [export|import]` — git-friendly chunks JSON gzip. Re-imports idempotent por SHA-256.
+- `seele graph export [--project P] [--out DIR] [--no-hubs] [--run-graphify] [--graphify-bin PATH]` — el grafo de memoria (observaciones + `links` + relaciones juzgadas/pendientes + hubs por proyecto y tipo) como `DIR/graphify-out/graph.json` en el formato node-link que lee [Graphify](https://github.com/Graphify-Labs/graphify). Graphify es opcional (ADR-17): el JSON se escribe siempre; `--run-graphify` resuelve el ejecutable como `--graphify-bin` > `$GRAPHIFY_BIN` > PATH, su ausencia es el warning `graphify-not-found` con exit 0 y su fallo es error. Ver `docs/GRAPHIFY.md`.
 - `seele import from-engram <path> [--dry-run] [--re-embed]` — migración one-shot de ENGRAM SQLite (ADR-13). Preserva ULIDs, mapea `linked_to[]` a tabla `links`. Idempotente.
 - `seele setup [--agent <name>|--all|--list] [--dry-run] [--no-backup]` — wizard MCP install. 3 agentes implementados (claude-code/cursor/windsurf), 5 skeleton (opencode/aider/cody/continue/zed).
 - `seele tui` — ratatui interactivo, 5 vistas (Home/Browse/Search/Detail/Stats), keymap vi-style.
@@ -145,7 +146,7 @@ Aplicamos AEGIS v2.0.0 (sin agentes en background, todo en consola). Resumen:
 
 ## Cloven
 
-`/cloven` se invoca entre ciclos para revisión externa. Cloven vive en `C:/dev/buddys/cloven/`. Vió este repo desde la fase genesis y ya advirtió:
+`/cloven` se invoca entre ciclos para revisión externa. Cloven es una herramienta privada del autor, fuera de este repositorio: no hace falta para usar ni para desarrollar SEELE. Vió este repo desde la fase genesis y ya advirtió:
 
 - (2026-05-10) NIT — asegurar que ningún archivo Rust generado contenga residuos del nombre legacy "STELE". Cerrado vía `scripts/check-no-stele-residual.{sh,ps1}` + CI jobs.
 - (2026-05-10) Cloven follow-up — licencia debe ser MIT pura (no Apache-2.0/MIT mixta), tests en order, dependabot configurado para `ort` pin. Cerrado en commits `47d87ac` y `9478201`.
@@ -165,15 +166,17 @@ Aplicamos AEGIS v2.0.0 (sin agentes en background, todo en consola). Resumen:
 - ✅ Cada PR/commit corre tests + clippy + fmt + STELE residual antes de pushear.
 - ✅ Crear plan táctico **antes** de codear cualquier feature nueva no trivial.
 - ✅ Devlog al cierre de cada sprint.
-- ✅ Append cost-ledger por sesión (ver convención en `C:/dev/protocols/AEGIS/guides/cost-ledger.md`).
+- ✅ Append cost-ledger por sesión (ver convención en [`guides/cost-ledger.md` de aegis-protocol](https://github.com/orlando-vazquez-career/aegis-protocol/blob/main/guides/cost-ledger.md)).
 - ✅ `genesis/plans/<fase>/00-INDEX.md` actualizado al agregar/mover docs.
 - ✅ Update `CHANGELOG.md` (sección `Unreleased`) con todo cambio que afecte API pública o behavior visible.
 - ✅ ADR para decisiones técnicas no triviales (`genesis/plans/arquitectura/<NN>-<slug>.md`). Sólo cuando la decisión no es obvia.
 
 ## Referencias
 
-- AEGIS-PROTOCOL.md: `C:/dev/protocols/AEGIS/AEGIS-PROTOCOL.md`.
-- LUMEN-PROTOCOL: `C:/dev/protocols/LUMEN/` (cuando llegue el frontend del SEELE TUI / web — v0.3 si emerge).
+- AEGIS-PROTOCOL.md: https://github.com/orlando-vazquez-career/aegis-protocol/blob/main/AEGIS-PROTOCOL.md (repo privado del autor; un clon local puede estar en cualquier ruta, no se asume ninguna).
+- LUMEN-PROTOCOL.md: https://github.com/orlando-vazquez-career/lumen-protocol/blob/main/LUMEN-PROTOCOL.md (repo privado del autor; cuando llegue el frontend del SEELE TUI / web — v0.3 si emerge).
+- Graphify (consumidor opcional del grafo, ADR-17): https://github.com/Graphify-Labs/graphify — ver `docs/GRAPHIFY.md`.
+- Convenciones de referencia (repos hermanos, herramientas opcionales): `docs/CONVENTIONS.md`.
 - ENGRAM: https://github.com/Gentleman-Programming/engram.
 - Anthropic MCP spec: https://modelcontextprotocol.io.
 - sqlite-vec docs: https://github.com/asg017/sqlite-vec.

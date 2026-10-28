@@ -1,7 +1,7 @@
 # Plan de mejoras: lo que GRAIL hace bien, aplicado a SEELE
 
 **Fecha**: 2026-06-09
-**Fuente**: [Análisis](2026-06-09-analisis-grail-vs-seele.md) comparativo de 10 dimensiones, verificado claim por claim contra el código de ambos repos y el compendio fact-checkeado de GRAIL (`C:/dev/tools/GRAIL/docs/COMPENDIUM.md` + `docs/compendium/01..16-*.md`).
+**Fuente**: [Análisis](2026-06-09-analisis-grail-vs-seele.md) comparativo de 10 dimensiones, verificado claim por claim contra el código de ambos repos y el compendio fact-checkeado de GRAIL (`COMPENDIUM.md` + `compendium/01..16-*.md`, generados localmente por el autor sobre el clon de GRAIL en [`b7bb49e`](https://github.com/CAMARA-CHILENA-INTELIGENCIA-ARTIFICIAL/GRAIL/commit/b7bb49e); no están en el repo público, pendientes de vendorizar bajo `docs/analysis/sources/`).
 
 ---
 

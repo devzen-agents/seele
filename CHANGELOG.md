@@ -12,8 +12,35 @@ footprint del binario ADR-15). Devlog
 `docs/aegis/devlogs/2026-05-29-sprint-v0.3-alpha-eval-harness.md`. Sin release
 SemVer marcado._
 
+### Added
+
+- **`seele graph export`** (ADR-17) — el grafo de memoria (observaciones,
+  `links`, relaciones `judged`→EXTRACTED / `pending`→INFERRED, hubs por
+  proyecto y tipo con `--no-hubs` para quitarlos) como
+  `<out>/graphify-out/graph.json`, el formato node-link que lee
+  [Graphify](https://github.com/Graphify-Labs/graphify). Graphify es
+  opcional y nunca una dependencia: el JSON se escribe siempre;
+  `--run-graphify` resuelve el ejecutable como `--graphify-bin` >
+  `$GRAPHIFY_BIN` > PATH (+`PATHEXT` en Windows) y la primera fuente
+  configurada decide; si no hay ejecutable, warning `graphify-not-found` y
+  exit 0; si corre y falla, exit 1. Siempre pasa `--no-label` (ningún LLM).
+  Tests unitarios + e2e (`graph_e2e.rs`). Doc: `docs/GRAPHIFY.md`.
+
 ### Fixed
 
+- **Deriva de versiones internas: `main` no compilaba** —
+  `[workspace.dependencies]` pineaba los crates `seele-*` en
+  `version = "0.2.0"` mientras `[workspace.package]` decía `0.4.0` y
+  `Cargo.lock` seguía en 0.2.0; cargo no resuelve `seele-core = "^0.2.0"`
+  contra el crate local 0.4.0 (`failed to select a version`). Bump de los
+  13 pins a `0.4.0` + `cargo update --workspace`. Era también la causa del
+  CI rojo en `main` desde el commit de v0.4.0 (2026-07-27).
+- **Clippy 1.98 en verde** — el lint nuevo `chunks_exact_to_as_chunks`
+  (`seele-storage::ObservationStore::get_embedding`) sugiere `as_chunks`,
+  estable solo desde Rust 1.88; con MSRV 1.85 se conserva `chunks_exact`
+  con un `allow` puntual y su motivo. Sin cambio de comportamiento.
+- **Snapshots de la TUI desactualizados** — las 10 baselines de `views_snapshot`
+  seguían en `SEELE v0.2.0`; refrescadas a `v0.4.0` (única diferencia).
 - **Re-embedding an observation always failed (vec0 UNIQUE)** — sqlite-vec
   0.1.9 virtual tables reject `INSERT OR REPLACE` on an existing rowid
   ("UNIQUE constraint failed on observations_vec primary key"), so any second

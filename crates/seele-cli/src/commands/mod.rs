@@ -8,6 +8,7 @@ pub mod doctor;
 pub mod embedder;
 #[cfg(feature = "eval")]
 pub mod eval;
+pub mod graph;
 pub mod import;
 pub mod link;
 pub mod list;

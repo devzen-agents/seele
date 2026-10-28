@@ -43,6 +43,7 @@ struct BackupReport {
 
 pub async fn run(args: Args, db: &Option<PathBuf>, out: &OutputOpts) -> anyhow::Result<()> {
     let source = db.clone().unwrap_or_else(crate::default_db_path);
+    crate::app::require_database_file(&source)?;
     if args.destination.exists() {
         anyhow::bail!(
             "backup destination already exists: {}",

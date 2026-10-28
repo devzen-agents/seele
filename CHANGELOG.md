@@ -28,6 +28,10 @@ SemVer marcado._
 
 ### Fixed
 
+- Backup refuses a missing/non-file source before creating a destination. Added
+  opt-in `--require-existing-db` to prevent accidental empty database initialization
+  in existing-memory workflows; default first-use initialization is unchanged.
+
 - **Deriva de versiones internas: `main` no compilaba** —
   `[workspace.dependencies]` pineaba los crates `seele-*` en
   `version = "0.2.0"` mientras `[workspace.package]` decía `0.4.0` y

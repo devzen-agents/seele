@@ -31,6 +31,13 @@
   variables de entorno con default, PATH con degradación; nunca rutas de
   una máquina. Con ejemplos verificados de proyectos comparables.
 
+## Pruebas de herramientas de desarrollo
+
+- [`MARKDOWN-EDIT-REGRESSION.md`](MARKDOWN-EDIT-REGRESSION.md) — prueba sintética
+  de edición parcial y verificación byte a byte; separa simulación de editor real.
+- [Plan de la regresión Markdown](plans/tactica/markdown-edit-regression/plan.md)
+  — alcance autorizado, sin cambios al motor ni a datos reales; revisión pendiente.
+
 ## Análisis comparativos (`docs/analysis/`)
 
 - [`2026-06-09-analisis-grail-vs-seele.md`](analysis/2026-06-09-analisis-grail-vs-seele.md)

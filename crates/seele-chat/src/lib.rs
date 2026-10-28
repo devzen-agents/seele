@@ -162,6 +162,9 @@ pub struct ToolCallFunction {
 #[async_trait]
 pub trait ChatProvider: Send + Sync {
     /// Send one round of messages, return the next assistant message.
+    // async_trait adds #[must_use] to a boxed Future, which is already must-use.
+    // Keep this allowance local to the macro-generated method.
+    #[allow(clippy::double_must_use)]
     async fn complete(&self, messages: &[Message]) -> Result<Message, ChatError>;
     fn name(&self) -> &str;
     fn model(&self) -> &str;
